@@ -52,16 +52,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Docker Build and Push Container
+        name: Docker Build Container
         uses: docker/build-push-action@v4
         with:
           context: ./
           file: ./Dockerfile
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/react-app:${{ steps.commit.outputs.short }}
           outputs: type=docker,dest=/tmp/react-app.tar
-          # push: true
       -
-        name: Upload artifact
+        name: Upload Docker Artifact
         uses: actions/upload-artifact@v3
         with:
           name: react-app
@@ -70,7 +69,7 @@ jobs:
           retention-days: 1
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: docker-build
 
     steps:
