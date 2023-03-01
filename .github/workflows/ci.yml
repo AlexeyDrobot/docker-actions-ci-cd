@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - id: commit
-      uses: pr-mpt/actions-commit-hash@v2
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -30,6 +28,8 @@ jobs:
     needs: [build]
 
     steps:
+    - id: commit
+      uses: pr-mpt/actions-commit-hash@v2
     - uses: actions/checkout@v3
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
